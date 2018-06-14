@@ -165,7 +165,7 @@
 	
 		# git  clone  https://github.com/1032231418/Conf_Web.git
 		# cd Conf_Web/ospweb/
-	    #virtualenv   env                  #建议创建一个沙盒环境跑该平台
+		#virtualenv   env                  #建议创建一个沙盒环境跑该平台
 		# source  env/bin/activate         #使用沙盒环境
 		# pip install -r requirement.txt   #安装相关软件
 		
@@ -206,10 +206,14 @@
 				4.给我们的商城nginx集群1项目创建配置文件
 				5.域名 和 节点名称可能是多个，这里我们需要创建目录 /Shopping/nginx/cluster1/server_name 和 /Shopping/nginx/cluster1/upstream
 
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/project_list.png)	
+
 			配置创建:
 				1.反向代理        /Shopping/nginx/cluster1/proxy_name  
 				2.绑定一个域名     /Shopping/nginx/cluster1/server_name/1	
 				3.创建一个集群节点 /Shopping/nginx/cluster1/upstream/web1	
+
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/vhost_list.png)	
 
 
 	生成的配置文件
