@@ -1,5 +1,0 @@
-Django==1.11.8
-django-pure-pagination
-MySQL-python
-requests
-python-etcd==0.4.5
