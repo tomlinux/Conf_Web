@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}申请发布{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">申请发布</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+<div class="box-header with-border">
+  <h3 class="box-title">主机配置</h3>
+  <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+  </div>
+</div>
+<!-- /.box-header -->
+
+<div class="box-body">
+    <form method="post" action="{% url 'confd:vhost_list' %}" class="form-horizontal">
+        <input  class="form-control" name ="id"  id="id" value="{{ vhost_detail.id }}"   readonly="readonly"  hidden  />
+        {% if msg %}
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ msg | safe }}
+            </div>
+        {% elif errmsg %}
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ errmsg | safe }}
+            </div>
+        {% endif %}
+
+
+
+
+        <div class="hr-line-dashed"></div>
+
+
+        <div class="form-group"><label class="col-sm-2 control-label">选择项目：</label>
+            <div class="col-sm-8">
+                <select name="project_name" id="project_name" class="select2_demo_3 form-control">
+                        <option value="{{ vhost_detail.id }}" selected>{{ vhost_detail.project_name.project_name }}</option>
+                </select>
+                 {% for error in forms.name.errors %}<span style="color: red">{{ error }}</span>{% endfor %}
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">key：</label>
+            <div class="col-sm-8">
+             <input  class="form-control" name ="vhosts_key"  id="vhosts_key" value="{{ vhost_detail.vhosts_key }}"   readonly="readonly" />
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+
+        <div class="hr-line-dashed"></div>
+
+         <div class="form-group"><label class="col-sm-2 control-label">value：</label>
+            <div class="col-sm-8">
+             <input  class="form-control" name ="vhosts_value"  id="vhosts_value" value="{{ vhost_detail.vhosts_value }}"  />
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-4 col-sm-offset-2">
+                <button id="submit_button" class="btn btn-primary" type="submit">提交</button>
+                <button class="btn btn-white" type="reset">取消</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+
+        $(".select2_demo_3").select2({
+            allowClear: true
+        });
+
+{% endblock %}
