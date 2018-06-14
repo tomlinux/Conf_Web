@@ -159,3 +159,58 @@
 			
 
 
+## 四．配置平台部署
+
+	1)Github 克隆平台代码安装平台依赖
+	
+		# git  clone  https://github.com/1032231418/Conf_Web.git
+		# cd Conf_Web/ospweb/
+	    #virtualenv   env                  #建议创建一个沙盒环境跑该平台
+		# source  env/bin/activate         #使用沙盒环境
+		# pip install -r requirement.txt   #安装相关软件
+		
+	2)创建数据库并将表刷入数据库
+		
+		# vi opsweb/settings.py   #这里数据库信息改为自己的数据库信息
+				DATABASES = {
+					  'default': {
+						'ENGINE': 'django.db.backends.mysql',
+						'NAME': 'confd',
+						'HOST': '192.168.8.114',
+						'USER': 'root',
+						'PASSWORD': '123456',
+						'PORT': 3306,
+					}
+				}
+		# python manage.py   migrate          #提交迁移文件至数据库,将表刷入数据库
+
+	3)创建超级管理员账号
+	
+  	    # python manage.py    createsuperuser
+
+
+	4)运行平台
+	
+		# python manage.py  runserver 0:8000
+		访问地址就是 http://ip/8000   账号密码就是上一步创建的超级管理员账号密码
+
+
+	5)登录平台为nginx创建key/value  
+
+		例子:  Shopping 平台为例
+		
+			项目创建:
+				1.创建商城项目  /Shopping
+				2.创建商城项目里面的 /Shopping/nginx   nginx 服务
+				3.创建nginx 集群目录  /Shopping/nginx/cluster1
+				4.给我们的商城nginx集群1项目创建配置文件
+				5.域名 和 节点名称可能是多个，这里我们需要创建目录 /Shopping/nginx/cluster1/server_name 和 /Shopping/nginx/cluster1/upstream
+
+			配置创建:
+				1.反向代理        /Shopping/nginx/cluster1/proxy_name  
+				2.绑定一个域名     /Shopping/nginx/cluster1/server_name/1	
+				3.创建一个集群节点 /Shopping/nginx/cluster1/upstream/web1	
+
+
+	生成的配置文件
+	通过hosts 文件我们可以查看节点状态
