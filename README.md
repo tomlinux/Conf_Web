@@ -212,6 +212,11 @@
 
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/project_list.png)	
 
+	etcd 里面存储的值
+
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/etcd_key_value.png)	
+
+
 			配置创建:
 				1.反向代理        /Shopping/nginx/cluster1/proxy_name  
 				2.绑定一个域名     /Shopping/nginx/cluster1/server_name/1	
