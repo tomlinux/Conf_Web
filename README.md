@@ -5,13 +5,17 @@
 
 
 
-环境:
+## 环境:
 
 	CentOS 6/7 x64
 	Python:  2.7.6
 	Etcd： 3.2.18
 	Confd:  0.16.0
 	Nginx: 1.12.1
+
+## 效果演示
+
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/yanshi.gif)	
 
 
 ## 一.拓扑图:
