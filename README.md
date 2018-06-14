@@ -102,7 +102,7 @@
 	4)创建配置文件目录
 	
 				# mkdir -p /etc/confd/{conf.d,templates}
-				conf.d            # 资源模板，下面文件必须以toml后缀
+				conf.d          # 资源模板，下面文件必须以toml后缀
 				templates       # 配置文件模板，下面文件必须以tmpl后缀
 
 
@@ -112,10 +112,10 @@
 			# vi /etc/confd/conf.d/app01.conf.toml
 
 			[template]
-			src = "app01.conf.tmpl"    # 默认在/etc/confd/templates目录下
-			dest = "/usr/local/nginx/conf/vhost/app01.conf"  #要更新的配置文件
+			src = "app01.conf.tmpl"                              #默认在/etc/confd/templates目录下
+			dest = "/usr/local/nginx/conf/vhost/app01.conf"      #要更新的配置文件
 			keys = [
-			   "/Shopping",            #监测的key
+			   "/Shopping",                                      #监测的key
 			]
 			reload_cmd ="/usr/local/nginx/sbin/nginx -s reload"   #最后执行的命令
 
