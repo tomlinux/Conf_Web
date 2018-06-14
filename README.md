@@ -224,6 +224,10 @@
 
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/vhost_list.png)	
 
+	etcd 里面存储的值
+
+	
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/etcd_key_value1.png)	
 
 
 	生成的配置文件
