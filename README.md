@@ -53,42 +53,43 @@
 		#mkdir  /usr/local/nginx/conf/vhost/
 		Nginx主配置文件修改为这个样子,增加include目录配置
 		#vi  /usr/local/nginx/conf/nginx.conf
-				#user  nobody;
-				worker_processes  1;
+		```java  
+		#user  nobody;
+		worker_processes  1;
 
-				#error_log  logs/error.log;
-				#error_log  logs/error.log  notice;
-				#error_log  logs/error.log  info;
+		#error_log  logs/error.log;
+		#error_log  logs/error.log  notice;
+		#error_log  logs/error.log  info;
 
-				#pid        logs/nginx.pid;
-
-
-				events {
-					worker_connections  1024;
-				}
+		#pid        logs/nginx.pid;
 
 
-				http {
-					include       mime.types;
-					default_type  application/octet-stream;
+		events {
+			worker_connections  1024;
+		}
 
-					#log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-					#                  '$status $body_bytes_sent "$http_referer" '
-					#                  '"$http_user_agent" "$http_x_forwarded_for"';
 
-					#access_log  logs/access.log  main;
+		http {
+			include       mime.types;
+			default_type  application/octet-stream;
 
-					sendfile        on;
-					#tcp_nopush     on;
+			#log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+			#                  '$status $body_bytes_sent "$http_referer" '
+			#                  '"$http_user_agent" "$http_x_forwarded_for"';
 
-					#keepalive_timeout  0;
-					keepalive_timeout  65;
+			#access_log  logs/access.log  main;
 
-					#gzip  on;
+			sendfile        on;
+			#tcp_nopush     on;
 
-				include   vhost/*.conf;
-				}
+			#keepalive_timeout  0;
+			keepalive_timeout  65;
 
-			
+			#gzip  on;
+
+		include   vhost/*.conf;
+		}
+```  
+	
 
 
