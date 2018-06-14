@@ -186,6 +186,10 @@
 						'PORT': 3306,
 					}
 				}
+				
+				ETCD_Server = "192.168.0.221"        #这里改为自己etcd 的ip地址
+                ETCD_Port = 2379
+				
 		# python manage.py   migrate          #提交迁移文件至数据库,将表刷入数据库
 
 	3)创建超级管理员账号
