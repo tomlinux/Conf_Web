@@ -128,6 +128,7 @@
 	6)创建confd模板
 
 			# vi  /etc/confd/templates/app01.conf.tmpl 
+			
 			upstream {{getv "/Shopping/nginx/cluster1/proxy_name"}} {
 				{{range getvs "/Shopping/nginx/cluster1/upstream/*"}}
 					server {{.}};
