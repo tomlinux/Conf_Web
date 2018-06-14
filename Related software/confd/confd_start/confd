@@ -1,0 +1,68 @@
+#! /bin/sh
+# chkconfig: 2345 85 15
+# Description: Startup script for confd webserver on Debian. Place in /etc/init.d and
+# run 'update-rc.d -f confd defaults', or use the appropriate command on your
+# distro. For CentOS/Redhat run: 'chkconfig --add confd'
+
+### BEGIN INIT INFO
+# Provides:         confd
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the confd  server
+# Description:       starts confd using start-stop-daemon
+### END INIT INFO
+
+# Author:   licess
+# website:  https://github.com/kelseyhightower/confd
+
+NAME=confd
+PIDFILE=$(pgrep confd)
+
+. /etc/init.d/functions
+confd_start() {
+	nohup   /usr/bin/confd   -watch -backend etcd -node http://192.168.0.221:2379    >/var/log/confd.log   2>&1  & 
+}
+
+confd_stop() {
+            /usr/bin/pgrep  confd |xargs  kill  -9   >/dev/null    2>&1
+
+}
+
+case "$1" in
+    start)
+
+            confd_start
+        ;;
+
+    stop)
+        echo -n "Stoping $NAME... "
+        confd_stop
+        echo "$NAME   is  stopped..."
+        exit 1
+        ;;
+
+    status)
+        
+        if [  -n "$PIDFILE" ]; then
+            echo "$NAME (pid `pidof $NAME`) is running..."
+        else
+            echo "$NAME is stopped."
+        fi
+           ;;
+    restart)
+        confd_stop
+             echo -n "Stoping $NAME... "
+             echo "$NAME   is  stopped..."
+        sleep 1
+        confd_start
+            echo "$NAME (pid `pidof $NAME`) is running..."
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+
+esac
+exit 0
+

@@ -1,0 +1,17 @@
+upstream www.{{getv "/nginx/www/server_name"}} {
+{{range getvs "/nginx/www/upstream/*"}}
+     server {{.}};
+{{end}}
+}
+  
+server {
+   server_name   wwww.{{getv "/nginx/www/server_name"}};
+   location / {
+       proxy_pass        http://www.{{getv  "/nginx/www/server_name"}};
+       proxy_redirect off;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+

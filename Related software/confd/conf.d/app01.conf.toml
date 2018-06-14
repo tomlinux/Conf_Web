@@ -1,0 +1,7 @@
+[template]
+src = "app01.conf.tmpl"    # 默认在/etc/confd/templates目录下
+dest = "/usr/local/nginx/conf/vhost/app01.conf"  # 要更新的配置文件
+keys = [
+   "/nginx",            # 监测的key
+]
+reload_cmd ="/usr/local/nginx/sbin/nginx -s reload"   # 最后执行的命令
