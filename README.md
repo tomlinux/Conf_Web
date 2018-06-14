@@ -51,6 +51,45 @@
 		#./configure   --prefix=/usr/local/nginx --add-module=/usr/local/src/nginx_upstream_check_module/
 		make && make install
 		#mkdir  /usr/local/nginx/conf/vhost/
+		Nginx主配置文件修改为这个样子,增加include目录配置
+		#vi  /usr/local/nginx/conf/nginx.conf
 		
-![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/nginx.png)	
+		#user  nobody;
+		worker_processes  1;
+
+		#error_log  logs/error.log;
+		#error_log  logs/error.log  notice;
+		#error_log  logs/error.log  info;
+
+		#pid        logs/nginx.pid;
+
+
+		events {
+			worker_connections  1024;
+		}
+
+
+		http {
+			include       mime.types;
+			default_type  application/octet-stream;
+
+			#log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+			#                  '$status $body_bytes_sent "$http_referer" '
+			#                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+			#access_log  logs/access.log  main;
+
+			sendfile        on;
+			#tcp_nopush     on;
+
+			#keepalive_timeout  0;
+			keepalive_timeout  65;
+
+			#gzip  on;
+
+		include   vhost/*.conf;
+		}
+
+	
+
 
