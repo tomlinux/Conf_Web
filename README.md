@@ -221,7 +221,7 @@
 	
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/conf.png)	
 
-	通过hosts 文件我们可以查看节点状态
+	通过hosts 文件我们可以查看节点状态(虽然这个节点不是up 状态但是由此可见,我们可以动态添加节点)
 
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/node.png)	
 
