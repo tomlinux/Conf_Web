@@ -23,6 +23,7 @@ class  CreateProjectView(LoginRequiredMixin, TemplateView):
 
     def post(self, request):
         webdata = request.POST.dict()
+        webdata['project_url']=webdata['project_url'].strip()
         forms = ProjectForm(webdata)
         if forms.is_valid():
             try:

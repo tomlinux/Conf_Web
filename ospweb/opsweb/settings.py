@@ -89,8 +89,8 @@ WSGI_APPLICATION = 'opsweb.wsgi.application'
 DATABASES = {
       'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'confd',
-        'HOST': '192.168.8.114',
+        'NAME': 'test1',
+        'HOST': '192.168.0.126',
         'USER': 'root',
         'PASSWORD': '123456',
         'PORT': 3306,
