@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+
+{% block breadcrunb %}
+  <h1>
+     Dashboard
+    <small>Version 2.0</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">配置列表</li>
+  </ol>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Main row -->
+<div class="row">
+<!-- Left col -->
+<div class="col-md-12">
+
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">配置列表</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+
+    <div class="box-body">
+
+     <div style="margin-bottom: 10px;height: 30px" class="row">
+         <a  href="{% url 'confd:create_vhost' %}" style="float: left; margin-left: 1%" class="btn btn-sm btn-primary" id = "addbtn"> 添加配置 </a>
+        <form style="float: right;width: 20%;margin-right: 1%">
+        <div  class="input-group">
+            <input type="text" class="form-control" name="keyword"
+                 placeholder="标题|内容|结果" value="{% if keyword %} {{ keyword }} {% endif %}">
+            <div class="input-group-btn">
+               <button id='search_btn' type="submit" class="btn btn-sm btn-primary">搜索</button>
+            </div>
+        </div>
+        </form>
+     </div>
+
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-striped footable toggle-arrow-tiny" data-page-navigation=".paginations">
+        <thead>
+            <tr>
+                <th class="text-center" data-toggle="true">项目名称</th>
+                <th class="text-center">键</th>
+                <th class="text-center">值</th>
+                <th class="text-center">操作</th>
+            </tr>
+        </thead>
+            <tbody>
+            {% for vhost  in vhosts_list %}
+            <tr class="{{ vhost.id }}">
+                <td class="text-center">{{ vhost.project_name.project_name  }}</td>
+                <td class="text-center">{{ vhost.vhosts_key }}</td>
+                <td class="text-center">{{ vhost.vhosts_value }}</td>
+                <td class="text-center">
+                    <a href="{% url 'confd:detail_vhost' vhost.id %}" class="btn btn-xs btn-info btn-execute">编辑</a>
+                        {% if vhost.vhosts_status == 0 %}
+                            <button type="button" class="btn btn-xs btn-success vhost_status" status="{{ vhost.vhosts_status }}" data="{{ vhost.id }}">关闭</button>
+                        {% elif vhost.vhosts_status == 1 %}
+                            <button type="button" class="btn btn-xs btn-primary vhost_status" status="{{ vhost.vhosts_status }}"  data="{{ vhost.id }}">启用</button>
+                        {% else %}
+                            状态异常
+                        {% endif %}
+
+                    <button type="button" class="btn btn-sm btn-danger User_delete"   data="{{ vhost.id }}">删除</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    </div><!-- /.table-responsive -->
+
+            <div class="row">
+              <div class="col-sm-6">
+                 <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">
+                     显示 [{{ paginator.count }}] 条数据中的 第 [{{ page_obj.start_index}}] 至 [{{ page_obj.end_index }}] 的数据
+                 </div>
+              </div>
+
+              {% include 'paginator.html' %}
+            </div><!-- /.paginator -->
+
+
+</div>
+<!-- /.box-body -->
+
+</div>
+  <!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+
+
+{% endblock %}
+
+{% block js %}
+    //删除vhost
+
+        $(".User_delete").click(function () {
+            var id = $(this).attr("data")
+            $.ajax({
+                  url: "{% url 'confd:vhost_list' %}",
+                  type: "delete",
+                  data: {"id": id},
+                  success: function(res){
+                     if (res.code == 0) {
+                         swal("Good", res.result, "success");
+                      location.reload()
+                         }else{
+                          swal("操作失败", res.result, "error")
+                         }
+                     },
+              })
+
+
+        })
+
+
+ $(".vhost_status").click(function () {
+ var id = $(this).attr("data")
+ var status = $(this).attr("status")
+    console.log(id)
+     $.ajax({
+           url: "{% url 'confd:vhost_list' %}",
+           type: "PUT",
+           data: {"id": id,'status':status},
+           success: function(res){
+              if (res.code == 0) {
+                  swal("Good", res.result, "success");
+               location.reload()
+                  }else{
+                              swal("操作失败", res.result, "error");
+                             }
+                         },
+                  })
+    })
+
+
+        $(document).ready(function() {
+            $('.footable').footable();
+          })
+{% endblock %}
