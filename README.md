@@ -91,5 +91,71 @@
 			include   vhost/*.conf;
 			}
 
+	3)安装confd		
+				
+				下载地址https://github.com/kelseyhightower/confd/releases
+				下载完毕丢到系统里面
+				# cp confd  /usr/bin/confd 
+				# which  confd
+				/usr/bin/confd
+
+	4)创建配置文件目录
+	
+				# mkdir -p /etc/confd/{conf.d,templates}
+				conf.d            # 资源模板，下面文件必须以toml后缀
+				templates       # 配置文件模板，下面文件必须以tmpl后缀
+
+
+
+	5)创建confd配置文件
+
+			# vi /etc/confd/conf.d/app01.conf.toml
+
+			[template]
+			src = "app01.conf.tmpl"    # 默认在/etc/confd/templates目录下
+			dest = "/usr/local/nginx/conf/vhost/app01.conf"  #要更新的配置文件
+			keys = [
+			   "/Shopping",            #监测的key
+			]
+			reload_cmd ="/usr/local/nginx/sbin/nginx -s reload"   #最后执行的命令
+
+
+
+	6)创建confd模板
+
+			# vi  /etc/confd/templates/app01.conf.tmpl 
+			upstream {{getv "/Shopping/nginx/cluster1/proxy_name"}} {
+				{{range getvs "/Shopping/nginx/cluster1/upstream/*"}}
+					server {{.}};
+				{{end}}
+
+			  check interval=5000 rise=1 fall=5 timeout=4000 type=http;
+			  check_http_send "HEAD / HTTP/1.0\r\n\r\n";
+			  check_http_expect_alive http_2xx http_3xx;
+
+			}
+			  
+			server {
+			   server_name   {{range getvs "/Shopping/nginx/cluster1/server_name/*"}} {{.}} {{end}};
+			   location / {
+				   proxy_pass        http://{{getv  "/Shopping/nginx/cluster1/proxy_name"}};
+				   proxy_redirect off;
+				   proxy_set_header Host $host;
+				   proxy_set_header X-Real-IP $remote_addr;
+				   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+				}
+				  location /status {
+							check_status;
+							access_log   off;
+					   }
+			}
+
+
+	7)启动confd并设置开机启动
+	
+			开机启动脚本会随文档附带
+			拷贝至/etc/init.d/confd ,只需要更改etcd 的连接地址即可
+			#/etc/init.d/confd  start  && chkconfig  --add  confd  && chkconfig  confd on 
+			
 
 
