@@ -1,17 +1,26 @@
-upstream www.{{getv "/nginx/www/server_name"}} {
-{{range getvs "/nginx/www/upstream/*"}}
-     server {{.}};
-{{end}}
+upstream {{getv "/Shopping/nginx/cluster1/proxy_name"}} {
+    {{range getvs "/Shopping/nginx/cluster1/upstream/*"}}
+        server {{.}};
+    {{end}}
+
+  check interval=5000 rise=1 fall=5 timeout=4000 type=http;
+  check_http_send "HEAD / HTTP/1.0\r\n\r\n";
+  check_http_expect_alive http_2xx http_3xx;
+
 }
   
 server {
-   server_name   wwww.{{getv "/nginx/www/server_name"}};
+   server_name   {{range getvs "/Shopping/nginx/cluster1/server_name/*"}} {{.}} {{end}};
    location / {
-       proxy_pass        http://www.{{getv  "/nginx/www/server_name"}};
+       proxy_pass        http://{{getv  "/Shopping/nginx/cluster1/proxy_name"}};
        proxy_redirect off;
        proxy_set_header Host $host;
        proxy_set_header X-Real-IP $remote_addr;
        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
+      location /status {
+                check_status;
+                access_log   off;
+           }
 }
 
