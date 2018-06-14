@@ -216,5 +216,12 @@
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/vhost_list.png)	
 
 
+
 	生成的配置文件
+	
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/conf.png)	
+
 	通过hosts 文件我们可以查看节点状态
+
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/node.png)	
+
