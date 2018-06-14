@@ -37,7 +37,7 @@
 	1)安装etcd(这里安装的单机,集群环境根据自己的需求选取)
 	
 		# yum install etcd -y
-		# sed -i  's/localhost/0.0.0.0/g'  /etc/etcd/etcd.conf       #配置监听地址
+		# sed -i  's/localhost/0.0.0.0/g'  /etc/etcd/etcd.conf  #配置监听地址
 		# systemctl   start  etcd  &&  systemctl  enable  etcd  #启动服务设置开机动
 
 	2)安装nginx
@@ -51,3 +51,6 @@
 		#./configure   --prefix=/usr/local/nginx --add-module=/usr/local/src/nginx_upstream_check_module/
 		make && make install
 		#mkdir  /usr/local/nginx/conf/vhost/
+		
+![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/nginx.png)	
+
